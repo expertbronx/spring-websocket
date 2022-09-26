@@ -4,16 +4,17 @@
 	
 	<style>
 	
-.tmarg {background-color:black;margin-top:75px;width:700px;height:70px;text-align:center;font-weight:bold;color:white;}
+.tmarg {background-color:black;margin-top:45px;width:700px;height:70px;text-align:center;font-weight:bold;color:white;}
 .container{width: 700px;
     	   height: 700px;}
 .cont{width: 700px;height: 700px;
 		background-color: skyblue;}
 .formms{width: 637px;height:38px;}    	  
 .bfff{margin-top:5px;width:705px;}	   
-.zel{width:300px;}
-.sol{margin-left:350px;width:300px;}
+.other{width:300px;}
+.me{margin-left:340px;width:300px;}
 .enter{width:630px;}
+.butt{margin-top:20px;}
 	   
 	
 	</style>
@@ -21,6 +22,10 @@
    <th:block th:fragment="content">
 
         <div class="container">
+        <div class="butt">
+        <button type="button" id="other" class="btn btn-success">다른 사람 만나기</button> 
+        <button type="button" id="exit" class="btn btn-danger">나가기</button>
+        </div>
         <div class="cont">
             <div class="col-6">
                 <h1 class="tmarg">ChatRoom</h1>
@@ -76,7 +81,7 @@
                        var str = '';
 
                        if( writer === username ){
-                           str = "<div class='zel'>";
+                           str = "<div class='me'>";
                            str += "<div class='alert alert-warning'>";
                            if( message === '상대방이 채팅방에 참여하였습니다.' ){
                            str += "<b>" + "채팅방에 입장하셨습니다." + "</b><br/>"
@@ -87,7 +92,7 @@
                            str += "</div></div>";
                            $("#msgArea").append(str);
                        }else{
-                           str = "<div class='sol'>";
+                           str = "<div class='other'>";
                            str += "<div class='alert alert-secondary'>";
                            if( message === '상대방이 채팅방에 참여하였습니다.'){
                            str = "<div class='enter'>";
@@ -121,6 +126,18 @@
                     msg.value = '';
                     }
                 });
+                
+                	$('#other').click(function(){
+                		stomp.unsubscribe(roomName);
+                		stomp.disconnect();
+                		location.href="/chat/matching";
+                	});
+                	
+                	$('#exit').click(function(){
+                		stomp.unsubscribe(roomName);
+                		stomp.disconnect();
+                		location.href="/chat/";
+                	});
                 
             });
         </script>
