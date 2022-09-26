@@ -11,6 +11,9 @@
 		background-color: skyblue;}
 .formms{width: 637px;height:38px;}    	  
 .bfff{margin-top:5px;width:705px;}	   
+.zel{width:300px;}
+.sol{margin-left:350px;width:300px;}
+.enter{width:630px;}
 	   
 	
 	</style>
@@ -73,7 +76,7 @@
                        var str = '';
 
                        if( writer === username ){
-                           str = "<div class='col-6'>";
+                           str = "<div class='zel'>";
                            str += "<div class='alert alert-warning'>";
                            if( message === '상대방이 채팅방에 참여하였습니다.' ){
                            str += "<b>" + "채팅방에 입장하셨습니다." + "</b><br/>"
@@ -84,16 +87,19 @@
                            str += "</div></div>";
                            $("#msgArea").append(str);
                        }else{
-                           str = "<div class='col-6'>";
+                           str = "<div class='sol'>";
                            str += "<div class='alert alert-secondary'>";
                            if( message === '상대방이 채팅방에 참여하였습니다.'){
+                           str = "<div class='enter'>";
+                           str += "<div class='alert alert-success'>";
                            str += "<b>" + "대화 상대가 채팅방에 참여하였습니다." + "</b>";
                            }else{
                            str += "<b>" + "상대" + " : " + message + "</b>";
                            }
                            str += "</div></div>";
                            $("#msgArea").append(str);
-                       }
+                       }	
+                       	   
                        	   var divdiv = document.getElementById("msgArea"); 
 						   divdiv.scrollTop = divdiv.scrollHeight; 
                    });
