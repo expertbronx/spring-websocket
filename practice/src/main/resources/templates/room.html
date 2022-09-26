@@ -1,25 +1,41 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <script src="https://code.jquery.com/jquery-3.6.1.js" integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI=" crossorigin="anonymous"></script>
-
-    <th:block th:fragment="content">
+	
+	<style>
+	
+.tmarg {background-color:black;margin-top:75px;width:700px;height:70px;text-align:center;font-weight:bold;color:white;}
+.container{width: 700px;
+    	   height: 700px;}
+.cont{width: 700px;height: 700px;
+		background-color: skyblue;}
+.formms{width: 637px;height:38px;}    	  
+.bfff{margin-top:5px;width:705px;}	   
+	   
+	
+	</style>
+	
+   <th:block th:fragment="content">
 
         <div class="container">
+        <div class="cont">
             <div class="col-6">
-                <h1>채팅방</h1>
+                <h1 class="tmarg">ChatRoom</h1>
             </div>
             <div>
-                <div id="msgArea" class="col"></div>
+                <div style="overflow:auto; width:695px;height:620px;margin-left:30px;" id="msgArea" class="col"></div>
                 <div class="col-6">
                     <div class="input-group mb-3">
-                        <input type="text" id="msg" class="form-control">
-                        <div class="input-group-append">
-                            <button class="btn btn-outline-secondary" type="button" id="button-send">전송</button>
-                        </div>
+                   
                     </div>
                 </div>
             </div>
             <div class="col-6"></div>
+            </div>
+            <div class="bfff">
+            <input type="text" id="msg" class="formms">                   
+            <button class="btn btn-outline-secondary" type="button" id="button-send">전송</button>
+                    </div>
         </div>
 
 
@@ -71,13 +87,15 @@
                            str = "<div class='col-6'>";
                            str += "<div class='alert alert-secondary'>";
                            if( message === '상대방이 채팅방에 참여하였습니다.'){
-                           str += "<b>" + "대화 상대가 채팅방에 참여하셨습니다." + "</b>";
+                           str += "<b>" + "대화 상대가 채팅방에 참여하였습니다." + "</b>";
                            }else{
                            str += "<b>" + "상대" + " : " + message + "</b>";
                            }
                            str += "</div></div>";
                            $("#msgArea").append(str);
                        }
+                       	   var divdiv = document.getElementById("msgArea"); 
+						   divdiv.scrollTop = divdiv.scrollHeight; 
                    });
                    
                    	console.log('stomp Subscribe Test [o][o][o][o][o]');
@@ -89,12 +107,13 @@
                 });
 
                		document.addEventListener('keydown', (event) => {
-               		if ( event.key == 'Enter')
+               		if ( event.key == 'Enter'){
                     var msg = document.getElementById("msg");
 
                     console.log(username + ":" + msg.value);
                     stomp.send('/pub/chat/message', {}, JSON.stringify({roomId: roomId, message: msg.value, writer: username}));
                     msg.value = '';
+                    }
                 });
                 
             });
