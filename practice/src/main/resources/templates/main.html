@@ -124,6 +124,11 @@ document.addEventListener('keydown', (event) => {
     location.href="/chat/matching";
 });
 
+document.addEventListener("touchstart", function (e) {
+	$('#chat').text('매칭중 ...');
+    location.href="/chat/matching";
+})
+
 </script>
 
 </html>
