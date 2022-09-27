@@ -4,25 +4,32 @@
 	
 	<style>
 	
-	.tmarg {background-color:black;
-			margin-top:45px;
+	.tmarg {
+			margin-top:25px;
 			width:700px;
+			max-width: 720px;
 			height:70px;
 			text-align:center;
 			font-weight:bold;
-			color:white;
+			color:black;
 			}
 			
-	.container {width: 700px;
+	.containerb {
+			   margin: auto;
+			   background-color: transparent;
+			   width: 720px;
 	    	   height: 700px;
+	    	   border: 3px solid skyblue;
 	    	   }
 	    	   
 	.cont {width: 700px;
-		   height: 700px;
-		   background-color: skyblue;
+		   height: 550px;
+		   background-color: white;
 		   }
 		   
-	.formms {width: 637px;
+	.formms {
+			margin-top: 60px;
+			width: 637px;
 			height:38px;
 			}
 			    	  
@@ -30,7 +37,8 @@
 		   width:705px;
 		   }
 		   	   
-	.other {width:300px;
+	.other {
+		   width:300px;
 	       }
 	       
 	.me {margin-left:340px;
@@ -40,15 +48,110 @@
 	.enter {width:630px;
 		   }
 		   
-	.butt {margin-top:20px;
+	.butt {
+		  margin-top:20px;
+		  margin-left: 10px;
 		  }
+		  
+		  
+		  
+		  
+		  @import url("https://fonts.googleapis.com/css?family=Roboto:300,400");
+body {
+   font-family: 'Roboto', sans-serif;
+   font-weight: 300;
+}
+
+
+.chat-bubble {
+   background: #dedede;
+   border-radius: 18px;
+   font-size: 14px;
+   line-height: 1.4em;
+   margin: 12px 24px;
+   max-width: 60%;
+   padding: 12px;
+   position: relative;
+}
+
+.chat-bubble::before, .chat-bubble::after {
+   content: '';
+   bottom: 0;
+   height: 20px;
+   left: -10px;
+   position: absolute;
+}
+
+.chat-bubble:before {
+   border-color: #dedede;
+   border-left-style: solid;
+   border-left-width: 20px;
+   border-bottom-right-radius: 50%;
+   z-index: -1;
+}
+
+.chat-bubble::after {
+   background: #ffffff;
+   border-bottom-right-radius: 50%;
+   width: 10px;
+   z-index: 1;
+}
+
+.chat-bubble.mine {
+   background: #3888ea;
+   color: #fff;
+   margin-left: auto;
+}
+
+.chat-bubble.mine::before, .chat-bubble.mine::after {
+   left: auto;
+   right: -10px;
+}
+
+.chat-bubble.mine::before {
+   border: none;
+   border-color: #3888ea;
+   border-right-style: solid;
+   border-right-width: 20px;
+   border-bottom-left-radius: 50%;
+}
+
+.chat-bubble.mine:after {
+   border-bottom-left-radius: 50%;
+}
+
+test::before {
+   border-color: #F3F3F3;
+   border-left-style: solid;
+   border-left-width: 20px;
+   border-bottom-right-radius: 16px 14px;
+   left: -7px;
+   z-index: -1;
+}
+
+.test::after {
+   content: "";
+   background: #FFFFFF;
+   left: -9px;
+   width: 9px;
+   z-index: 1;
+}
+
+.test::before,
+.test::after {
+   content: "";
+   bottom: 0px;
+   height: 20px;
+   position: absolute;
+}
+		  
 	   
 	
 	</style>
 	
    <th:block th:fragment="content">
 
-        <div class="container">
+        <div class="containerb">
         <div class="butt">
         <button type="button" id="other" class="btn btn-success">다른 사람 만나기</button> 
         <button type="button" id="exit" class="btn btn-danger">나가기</button>
@@ -58,7 +161,7 @@
                 <h1 class="tmarg">ChatRoom</h1>
             </div>
             <div>
-                <div style="overflow:auto; width:695px;height:620px;margin-left:30px;" id="msgArea" class="col"></div>
+                <div style="overflow-y:scroll; width:695px;height:520px;margin-left:30px;" id="msgArea" class="col"></div>
                 <div class="col-6">
                     <div class="input-group mb-3">
                    
@@ -109,7 +212,8 @@
 
                        if( writer === username ){
                            str = "<div class='me'>";
-                           str += "<div class='alert alert-warning'>";
+                           str += "<div class='chat-bubble mine'>";
+                           str += "<span class='chat-message'>";
                            if( message === '상대방이 채팅방에 참여하였습니다.' ){
                            str += "<b>" + "채팅방에 입장하셨습니다." + "</b><br/>"
                            	   +  "<b>" + "대화 상대 입장까지 잠시만 기다려주세요." + "</b>";
@@ -119,8 +223,9 @@
                            str += "</div></div>";
                            $("#msgArea").append(str);
                        }else{
-                           str = "<div class='other'>";
-                           str += "<div class='alert alert-secondary'>";
+                           str = "<div class='other'>";              
+                           str += "<div class='chat-bubble'>";
+                           str += "<span class='chat-message'>";
                            if( message === '상대방이 채팅방에 참여하였습니다.'){
                            str = "<div class='enter'>";
                            str += "<div class='alert alert-success'>";
