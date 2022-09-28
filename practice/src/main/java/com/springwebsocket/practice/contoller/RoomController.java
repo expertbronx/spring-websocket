@@ -4,6 +4,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import java.util.Random;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -56,9 +58,9 @@ public class RoomController {
 
     //채팅방 조회
     @GetMapping("/room")
-    public String getRoom(int roomNumber, Model model){
-
+    public String getRoom(int roomNumber, Model model, HttpServletRequest req){
         log.info("# get Chat Room, roomID : " + roomNumber);
+        model.addAttribute("addr", req.getRemoteAddr());
         model.addAttribute("room", repository.findRoomById(roomNumber));
         model.addAttribute("nickname", randomNick());
         
@@ -72,7 +74,7 @@ public class RoomController {
     
     //매칭한 유저 수 기준으로 방 만들기 or 방 입장하기 기능을 사용하는 매서드 
     @GetMapping(value = "/matching")
-    public String chattingMatching( Model model ) {
+    public String chattingMatching( Model model, HttpServletRequest req ) {
     	
     	plusUserCount();
     	
@@ -80,16 +82,16 @@ public class RoomController {
     		create(userCount);
     		model.addAttribute("room", repository.findRoomById(userCount));
             model.addAttribute("nickname", randomNick());
-    		getRoom(userCount, model);
+    		getRoom(userCount, model, req);
     	}else if( userCount%2 == 0 ) {
     		model.addAttribute("room", repository.findRoomById(userCount/2));
             model.addAttribute("nickname", randomNick());
-    		getRoom(userCount/2, model);
+    		getRoom(userCount/2, model, req);
     	}else{
     		create((userCount+1)/2);
     		model.addAttribute("room", repository.findRoomById((userCount+1)/2));
             model.addAttribute("nickname", randomNick());
-    		getRoom((userCount+1)/2, model);
+    		getRoom((userCount+1)/2, model, req);
     	}
     	
     	return "room";

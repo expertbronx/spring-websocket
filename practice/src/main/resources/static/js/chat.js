@@ -69,6 +69,17 @@
 
                     console.log(username + ":" + msg.value);
                     stomp.send('/pub/chat/message', {}, JSON.stringify({roomId: roomId, message: msg.value, writer: username}));
+                    
+                    	$.ajax({
+								url : '/sanction/json/chat?writer=' + username + "&message=" + msg.value ,
+								type : 'GET',
+								async : true,
+								dataType : "json",
+								timeout : 2000,
+								success : function(data){},
+								error : function(error){}
+								
+							});
                     msg.value = '';
                     }
                 });

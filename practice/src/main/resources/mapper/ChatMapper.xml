@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.springwebsocket.practice.mapper.ChatMapper">
+
+<resultMap id="chatMessageMap" type="ChatMessage">
+	<result property="writer"	column="sender_ip" jdbcType="VARCHAR"/>
+	<result property="message"	column="message" jdbcType="VARCHAR"/>
+</resultMap>
+
+<!-- INSERT -->
+<insert id="sendChat" parameterType="ChatMessage">
+	INSERT INTO message
+	(sender_ip, message, date)
+	VALUES
+	(#{writer}, #{message}, NOW())
+</insert>
+
+
+</mapper>

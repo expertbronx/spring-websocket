@@ -26,6 +26,7 @@ dependencies {
 	implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:2.2.2'
 	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf:2.7.3'
 	implementation 'org.springframework.boot:spring-boot-devtools'
+	implementation group: 'org.webjars.npm', name: 'sweetalert2', version: '11.4.33'
 	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
