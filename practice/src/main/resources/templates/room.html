@@ -1,155 +1,26 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
 <script src="https://code.jquery.com/jquery-3.6.1.js" integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+<script th:inline="javascript" type="text/javascript" th:src="@{/js/chat.js}"></script>
+<link rel="stylesheet" type="text/css" th:href="@{/css/chat.css}">
+
+</head>
 	
-	<style>
 	
-	.tmarg {
-			margin-top:25px;
-			width:700px;
-			max-width: 720px;
-			height:70px;
-			text-align:center;
-			font-weight:bold;
-			color:black;
-			}
-			
-	.containerb {
-			   margin: auto;
-			   background-color: transparent;
-			   width: 720px;
-	    	   height: 700px;
-	    	   border: 3px solid skyblue;
-	    	   }
-	    	   
-	.cont {width: 700px;
-		   height: 550px;
-		   background-color: white;
-		   }
-		   
-	.formms {
-			margin-top: 60px;
-			width: 637px;
-			height:38px;
-			}
-			    	  
-	.bfff {margin-top:5px;
-		   width:705px;
-		   }
-		   	   
-	.other {
-		   width:300px;
-	       }
-	       
-	.me {margin-left:340px;
-		 width:300px;
-		 }
-		 
-	.enter {width:630px;
-		   }
-		   
-	.butt {
-		  margin-top:20px;
-		  margin-left: 10px;
-		  }
-		  
-		  
-		  
-		  
-		  @import url("https://fonts.googleapis.com/css?family=Roboto:300,400");
-body {
-   font-family: 'Roboto', sans-serif;
-   font-weight: 300;
-}
-
-
-.chat-bubble {
-   background: #dedede;
-   border-radius: 18px;
-   font-size: 14px;
-   line-height: 1.4em;
-   margin: 12px 24px;
-   max-width: 60%;
-   padding: 12px;
-   position: relative;
-}
-
-.chat-bubble::before, .chat-bubble::after {
-   content: '';
-   bottom: 0;
-   height: 20px;
-   left: -10px;
-   position: absolute;
-}
-
-.chat-bubble:before {
-   border-color: #dedede;
-   border-left-style: solid;
-   border-left-width: 20px;
-   border-bottom-right-radius: 50%;
-   z-index: -1;
-}
-
-.chat-bubble::after {
-   background: #ffffff;
-   border-bottom-right-radius: 50%;
-   width: 10px;
-   z-index: 1;
-}
-
-.chat-bubble.mine {
-   background: #3888ea;
-   color: #fff;
-   margin-left: auto;
-}
-
-.chat-bubble.mine::before, .chat-bubble.mine::after {
-   left: auto;
-   right: -10px;
-}
-
-.chat-bubble.mine::before {
-   border: none;
-   border-color: #3888ea;
-   border-right-style: solid;
-   border-right-width: 20px;
-   border-bottom-left-radius: 50%;
-}
-
-.chat-bubble.mine:after {
-   border-bottom-left-radius: 50%;
-}
-
-test::before {
-   border-color: #F3F3F3;
-   border-left-style: solid;
-   border-left-width: 20px;
-   border-bottom-right-radius: 16px 14px;
-   left: -7px;
-   z-index: -1;
-}
-
-.test::after {
-   content: "";
-   background: #FFFFFF;
-   left: -9px;
-   width: 9px;
-   z-index: 1;
-}
-
-.test::before,
-.test::after {
-   content: "";
-   bottom: 0px;
-   height: 20px;
-   position: absolute;
-}
-		  
-	   
+	<body>
 	
-	</style>
 	
+   
    <th:block th:fragment="content">
+   		<input type="hidden" id=roomNumber th:value="${room.roomNumber}"/>
+   		<input type="hidden" id="roomId" th:value="${room.roomId}"/>
+   		<input type="hidden" id="nickName" th:value="${nickname}"/>
 
         <div class="containerb">
         <div class="butt">
@@ -176,102 +47,7 @@ test::before {
                     </div>
         </div>
 
-
-        <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
         
     </th:block>
-
-
-        <script th:inline="javascript">
-            $(document).ready(function(){
-
-                var roomName = [[${room.roomNumber}]];
-                var roomId = [[${room.roomId}]];
-                var username = [[${nickname}]];
-
-                console.log(roomName + ", " + roomId + ", " + username);
-
-                var sockJs = new SockJS("/stomp/chat");
-                //1. SockJS를 내부에 들고있는 stomp를 내어줌
-                var stomp = Stomp.over(sockJs);
-
-                //2. connection이 맺어지면 실행
-                stomp.connect({}, function (){
-                   console.log("STOMP Connection")
-
-                   //4. subscribe(path, callback)으로 메세지를 받을 수 있음
-                   stomp.subscribe("/sub/chat/room/" + roomId, function (chat) {
-                       var content = JSON.parse(chat.body);
-
-                       var writer = content.writer;
-                       var message = content.message;
-                       var str = '';
-
-                       if( writer === username ){
-                           str = "<div class='me'>";
-                           str += "<div class='chat-bubble mine'>";
-                           str += "<span class='chat-message'>";
-                           if( message === '상대방이 채팅방에 참여하였습니다.' ){
-                           str += "<b>" + "채팅방에 입장하셨습니다." + "</b><br/>"
-                           	   +  "<b>" + "대화 상대 입장까지 잠시만 기다려주세요." + "</b>";
-                           }else{
-                           str += "<b>" + "나" + " : " + message + "</b>";
-                           }
-                           str += "</div></div>";
-                           $("#msgArea").append(str);
-                       }else{
-                           str = "<div class='other'>";              
-                           str += "<div class='chat-bubble'>";
-                           str += "<span class='chat-message'>";
-                           if( message === '상대방이 채팅방에 참여하였습니다.'){
-                           str = "<div class='enter'>";
-                           str += "<div class='alert alert-success'>";
-                           str += "<b>" + "대화 상대가 채팅방에 참여하였습니다." + "</b>";
-                           }else{
-                           str += "<b>" + "상대" + " : " + message + "</b>";
-                           }
-                           str += "</div></div>";
-                           $("#msgArea").append(str);
-                       }	
-                       	   
-                       	   var divdiv = document.getElementById("msgArea"); 
-						   divdiv.scrollTop = divdiv.scrollHeight; 
-                   });
-                   
-                   	console.log('stomp Subscribe Test [o][o][o][o][o]');
-
-                   //3. send(path, header, message)로 메세지를 보낼 수 있음
-                   stomp.send('/pub/chat/enter', {}, JSON.stringify({roomId: roomId, writer: username}))
-                   console.log('입장 안내 메시지 출력');
-                   
-                });
-
-               		document.addEventListener('keydown', (event) => {
-               		if ( event.key == 'Enter'){
-                    var msg = document.getElementById("msg");
-
-                    console.log(username + ":" + msg.value);
-                    stomp.send('/pub/chat/message', {}, JSON.stringify({roomId: roomId, message: msg.value, writer: username}));
-                    msg.value = '';
-                    }
-                });
-                
-                	$('#other').click(function(){
-                		stomp.unsubscribe(roomName);
-                		stomp.disconnect();
-                		location.href="/chat/matching";
-                	});
-                	
-                	$('#exit').click(function(){
-                		stomp.unsubscribe(roomName);
-                		stomp.disconnect();
-                		location.href="/chat/";
-                	});
-                
-            });
-        </script>
-
+    </body>
 </html>
