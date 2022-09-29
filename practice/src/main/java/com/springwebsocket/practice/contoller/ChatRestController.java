@@ -31,10 +31,10 @@ public class ChatRestController {
 	}
 	
 	@GetMapping("json/report")
-	public int reportUser( String addr ) {
+	public int reportUser( String addr, String message ) {
 		
 		log.info("RestController = {} ", "/sanction/json/report/reportUser : GET start... ");
-		chatService.reportUser(addr);
+		chatService.reportUser(addr, message);
 		
 		return 1;
 	}

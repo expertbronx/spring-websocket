@@ -19,8 +19,8 @@ public class ChatServiceImpl implements ChatService {
 		return chatMapper.sendChat(chatMessage);
 	}
 	
-	public int reportUser( String addr ) {
-		return chatMapper.reportUser(addr);
+	public int reportUser( String addr, String message ) {
+		return chatMapper.reportUser(addr, message);
 	}
 	
 }

@@ -6,6 +6,6 @@ public interface ChatService {
 	
 	public int sendChat( ChatMessage chatMessage );
 
-	public int reportUser( String addr );
+	public int reportUser( String addr, String message );
 	
 }
